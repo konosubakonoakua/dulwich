@@ -77,8 +77,8 @@ COMMON_CAPABILITIES = [
     CAPABILITY_NO_PROGRESS,
 ]
 KNOWN_UPLOAD_CAPABILITIES = set(
-    COMMON_CAPABILITIES
-    + [
+    [
+        *COMMON_CAPABILITIES,
         CAPABILITY_THIN_PACK,
         CAPABILITY_MULTI_ACK,
         CAPABILITY_MULTI_ACK_DETAILED,
@@ -93,8 +93,8 @@ KNOWN_UPLOAD_CAPABILITIES = set(
     ]
 )
 KNOWN_RECEIVE_CAPABILITIES = set(
-    COMMON_CAPABILITIES
-    + [
+    [
+        *COMMON_CAPABILITIES,
         CAPABILITY_REPORT_STATUS,
         CAPABILITY_DELETE_REFS,
         CAPABILITY_QUIET,
@@ -212,7 +212,7 @@ class Protocol:
         try:
             sizestr = read(4)
             if not sizestr:
-                raise HangupException()
+                raise HangupException
             size = int(sizestr, 16)
             if size == 0 or size == 1:  # flush-pkt or delim-pkt
                 if self.report_activity:
@@ -222,7 +222,7 @@ class Protocol:
                 self.report_activity(size, "read")
             pkt_contents = read(size - 4)
         except ConnectionResetError as exc:
-            raise HangupException() from exc
+            raise HangupException from exc
         except OSError as exc:
             raise GitProtocolError(str(exc)) from exc
         else:
@@ -343,9 +343,7 @@ class ReceivableProtocol(Protocol):
     def __init__(
         self, recv, write, close=None, report_activity=None, rbufsize=_RBUFSIZE
     ) -> None:
-        super().__init__(
-            self.read, write, close=close, report_activity=report_activity
-        )
+        super().__init__(self.read, write, close=close, report_activity=report_activity)
         self._recv = recv
         self._rbuf = BytesIO()
         self._rbufsize = rbufsize
@@ -558,10 +556,7 @@ def format_ref_line(ref, sha, capabilities=None):
     if capabilities is None:
         return sha + b" " + ref + b"\n"
     else:
-        return (
-            sha + b" " + ref + b"\0"
-            + format_capability_line(capabilities)
-            + b"\n")
+        return sha + b" " + ref + b"\0" + format_capability_line(capabilities) + b"\n"
 
 
 def format_shallow_line(sha):

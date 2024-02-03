@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Operating System :: POSIX",
@@ -27,6 +28,7 @@ requires-python = ">=3.7"
 dependencies = [
     "urllib3>=1.25",
     'typing_extensions;python_version<="3.7"',
+    'setuptools ; python_version >= "3.12"',
 ]
 dynamic = ["version"]
 
@@ -74,7 +76,10 @@ select = [
     "E",
     "F",
     "I",
+    "PIE",
     "UP",
+    "RSE",
+    "RUF",
 ]
 ignore = [
     "ANN001",

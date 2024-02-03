@@ -1,10 +1,18 @@
-0.21.7	UNRELEASED
+0.21.8	UNRELEASED
 
+0.21.7	2023-12-05
  * Fix NameError when encountering errors during HTTP operation.
    (Jelmer Vernooĳ, #1208)
 
  * Raise exception when default identity can't be found.
    (Jelmer Vernooĳ)
+
+ * Add a dedicated exception class for unresolved
+   deltas. (Jelmer Vernooĳ, #1221)
+
+ * Support credentials in proxy URL. (Jelmer Vernooĳ, #1227)
+
+ * Add ``dulwich.porcelain.for_each_ref``. (Daniele Trifirò)
 
 0.21.6	2023-09-02
 
